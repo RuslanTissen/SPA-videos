@@ -7,6 +7,16 @@ function buttonClickHandler() {
 
 btn.addEventListener("click", buttonClickHandler);
 
+// --------------------------
+
 btn.addEventListener("mouseenter", () => {
-	console.log("Nouse enter!")
+	console.log("Mouse enter!")
+})
+
+btn.addEventListener("focus", () => {
+	console.log("Focus!")
+})
+
+btn.addEventListener("blur", () => {
+	console.log("Blur!")
 })
