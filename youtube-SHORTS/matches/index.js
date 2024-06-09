@@ -1,4 +1,5 @@
-const birds = document.querySelectorAll("li");
+// const birds = document.querySelectorAll("li");
+document.querySelectorAll("li").matches(".predator").textContent = "found";
 
 // for (const bird of birds) {
 // 	if (bird.matches(".predator")) {
