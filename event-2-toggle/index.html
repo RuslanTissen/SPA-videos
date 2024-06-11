@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<title>Event + Toggle</title>
+	<style>
+		body {
+			display: grid;
+			place-items: center;
+			height: 100vh;
+			margin: 0;
+			font-family: 'Roboto', sans-serif;
+			background-color: #f0f0f0;
+		}
+
+		.active {
+			background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+		}
+
+		.fontChange {
+			color: red;
+		}
+
+		#wrapper {
+			/* background: #2AA198; */
+			width: 300px;
+			height: 170px;
+			display: grid;
+			place-items: center;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			text-align: center;
+		}
+
+		#mark {
+			background: white;
+			width: 200px;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 10px;
+			margin-bottom: 1em;
+		}
+
+		button {
+			background: #007bff;
+			color: white;
+			border: none;
+			padding: 0.5em 1em;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 1em;
+			margin-bottom: 0;
+		}
+
+		button:hover {
+			background: #0056b3;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="wrapper" class="active">
+		<h3 id="mark">"addEventListener"</h3>
+		<button>Click me</button>
+		<p>Code is magic!</p>
+	</div>
+
+	<script src="index.js"></script>
+</body>
+
+</html>
