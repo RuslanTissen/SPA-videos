@@ -16,8 +16,9 @@ const origin = mark.innerHTML
 
 // --------------------- Bonus ------
 
-const wrapper = document.getElementById("wrapper")
+// const wrapper = document.getElementById("wrapper")
 
-wrapper.addEventListener("click", () => {
-	wrapper.lastElementChild.innerHTML = "Get practice and be master!"
-})
+// wrapper.addEventListener("click", () => {
+// 	wrapper.lastElementChild.innerHTML = "Get practice and be master!"
+// })
+
