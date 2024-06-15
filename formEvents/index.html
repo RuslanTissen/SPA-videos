@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Forms Event</title>
+</head>
+
+<body>
+
+	<h1>Incident report</h1>
+	<form name="incident-report" action="http://google.com/">
+		<div class="form-field">
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name">
+		</div>
+		<div class="form-field">
+			<label for="date">Date</label>
+			<input type="checkbox" name="toggleDate" id="toggleDate" checked>
+			Use date picker<br />
+			<input type="date" name="date" id="date">
+		</div>
+		<div class="form-field">
+			<label for="details">Details</label>
+			<textarea name="details" id="details"></textarea>
+		</div>
+		<div class="form-field">
+			<label></label>
+			<button id="submit" type="submit">Submit</button>
+			<button id="reset" type="reset">Reset</button>
+		</div>
+	</form>
+
+	<script>
+		const form = document.querySelector("form")
+		form.addEventListener("reset", e => {
+			if (!confirm("Are you sure?")) {
+				e.preventDefault()
+			}
+		})
+		form.addEventListener("submit", e => {
+			e.preventDefault()
+			const textarea = document.querySelector("#details")
+			if (textarea.value === "carrot") {
+				alert("No... be serious, this is serious business!")
+			}
+			console.log(event.target.elements)
+		})
+
+		const name = document.querySelector("#name")
+		name.addEventListener("change", (e) => {
+			console.log(e.target.value)
+		})
+
+		const cb = document.querySelector("#toggleDate")
+		cb.addEventListener("change", (e) => {
+			if (e.target.checked) {
+				document.querySelector("#date").setAttribute("type", "date")
+				document.querySelector("#details").value = "Science is Magic"
+			} else {
+				document.querySelector("#date").setAttribute("type", "text")
+			}
+		})
+
+	</script>
+
+</body>
+
+</html>
