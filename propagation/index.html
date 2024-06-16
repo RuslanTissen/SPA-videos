@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Propagation, Bubble/Capture, Delegation</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Roboto', sans-serif;
+			background-color: #222;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+			padding: 0 20px;
+		}
+
+		h1 {
+			color: #ffeb3b;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.box {
+			margin: 1.5em;
+			padding: 1.5em;
+			background: #4caf50;
+			border: 2px solid #ffeb3b;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		.outest {
+			background: #f44336;
+		}
+
+		.mid {
+			background: #2196f3;
+		}
+
+		.x {
+			background: #ffeb3b;
+			color: #222;
+		}
+
+		ul,
+		ol {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		ul li,
+		ol li {
+			background: #ff9800;
+			margin: 5px 0;
+			padding: 10px;
+			border: 1px solid #ffeb3b;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background 0.3s;
+		}
+
+		ul li:hover,
+		ol li:hover {
+			background: #ff5722;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Propagation, Bubble/Capture, Delegation</h1>
+
+	<div class="box outest">
+		<div class="box mid">
+			<div class="box x">
+				x
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const outest = document.querySelector(".outest")
+		const mid = document.querySelector(".mid")
+		const x = document.querySelector(".x")
+
+		// Add listeners for the "click" events during the bubble phase
+		x.addEventListener("click", (e) => {
+			e.stopPropagation()
+			console.log("Bubble x click")
+		})
+		mid.addEventListener("click", () => console.log("Bubble mid click"))
+		outest.addEventListener("click", () => console.log("Bubble outest click"))
+	</script>
+
+	<ul id="parent">
+		<li>Pictures</li>
+		<li>Documents
+			<ul>
+				<li>data.txt</li>
+				<li>notes.txt</li>
+				<li>hello.txt</li>
+			</ul>
+		</li>
+		<li>Downloads</li>
+	</ul>
+
+	<script>
+		// Вопрос: Как добавить прослушиватель событий к каждому элементу списка?
+
+		// Ответ 1: Добавьте его для каждого <li> — Плохая производительность, сложно поддерживать!
+		// const lis = document.querySelectorAll("li")
+		// Array.from(lis).forEach(li => {
+		// 	li.addEventListener("click", (e) => {
+		// 		console.log(e.target)
+		// 		// console.log({ target: e.target, current: e.currentTarget })
+		// 		e.stopPropagation() // This stops events from bubbling up to the parent!
+		// 	})
+		// })
+
+		// Ответ 2: Использовать делегирование; заставьте родителя работать!
+		document.querySelector("#parent").addEventListener("click", e => {
+			// If it's an <li> that was clicked, remove it from the document!
+			if (e.target.nodeName === "LI") {
+				e.target.remove()
+			}
+		})
+
+	</script>
+
+</body>
+
+</html>
