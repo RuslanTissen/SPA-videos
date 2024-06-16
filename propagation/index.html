@@ -96,12 +96,14 @@
 		const x = document.querySelector(".x")
 
 		// Add listeners for the "click" events during the bubble phase
-		x.addEventListener("click", (e) => {
-			e.stopPropagation()
-			console.log("Bubble x click")
-		})
+		x.addEventListener("click", (e) => { console.log("Bubble x click") })
 		mid.addEventListener("click", () => console.log("Bubble mid click"))
 		outest.addEventListener("click", () => console.log("Bubble outest click"))
+
+		// Add listeners for the "click" events during the capture phase
+		outest.addEventListener("click", () => console.log("Capture outest click"), true)
+		mid.addEventListener("click", () => console.log("Capture mid click"), true)
+		x.addEventListener("click", () => console.log("Capture x click"), true)
 	</script>
 
 	<ul id="parent">
