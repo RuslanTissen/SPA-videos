@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Event Delegation Example</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			background-color: #f0f0f0;
+		}
+
+		.container {
+			display: grid;
+			gap: 10px;
+			padding: 20px;
+			border-radius: 8px;
+			background-color: #fff;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.container div {
+			padding: 10px;
+			border-radius: 4px;
+			background-color: #007bff;
+			color: white;
+			text-align: center;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.container div:hover {
+			background-color: #0056b3;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container" id="parent">
+		<div>Click me 1</div>
+		<div>Click me 2</div>
+		<div>Click me 3</div>
+	</div>
+
+	<script>
+		// Добавляем слушатель событий к родительскому элементу
+		const parent = document.getElementById('parent')
+		parent.addEventListener('click', function (e) {
+			if (e.target && e.target.nodeName === 'DIV') {
+				alert('You clicked on ' + e.target.textContent);
+			}
+		});
+	</script>
+</body>
+
+</html>
