@@ -5,10 +5,17 @@
 	"main": "index.js",
 	"scripts": {
 		"createfolder": "mkdir exmplfolder",
-		"start": "node index.js"
+		"start": "node index.js",
+		"build": "babel src -d lib",
+		"help": "babel --help"
 	},
 	"author": "Ruslan",
 	"dependencies": {
 		"moment": "^2.30.1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.24.7",
+		"@babel/core": "^7.24.7",
+		"@babel/preset-env": "^7.24.7"
 	}
 }
