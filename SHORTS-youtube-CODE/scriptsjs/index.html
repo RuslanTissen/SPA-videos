@@ -4,35 +4,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Scripts в JSON package</title>
+	<title>Scripts в JSON</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 	<div class="container">
-		<div id="intro" class="scene">
-			<h1>Что такое скрипт в JSON package?</h1>
-		</div>
-		<div id="package-json" class="scene">
-			<!-- <h2>JSON файл с пустым скрипт объектом</h2> -->
-			<pre><code id="json-content">
-				{
-					"name": "example",
-					"version": "1.0.0",
-					"scripts": {}
-				 }
-</code></pre>
-		</div>
-		<div id="scripts-example" class="scene">
-			<h2>Пример: "start": "node app.js"</h2>
-			<!-- <pre><code id="scripts-example-content"></code></pre> -->
-		</div>
-		<div id="script-usage" class="scene">
-			<h2>Скрипты в JSON файле - ключевой элемент для запуска команд!</h2>
-		</div>
-		<div id="call-to-action" class="scene">
-			<!-- <h2>Переходите на канал для больше информации! Удачи!</h2> -->
-		</div>
+		<pre><code id="json-content">{
+  "scripts": {
+    "typescript-test": "cross-env node_modules/typescript/bin/tsc --project typing-tests"
+  }
+}</code></pre>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
