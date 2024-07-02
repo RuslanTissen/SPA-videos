@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>setTimeout() Intro</title>
+	<style>
+		body {
+			background-color: #2C3E50;
+			/* Темный синий фон */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			font-family: 'Roboto', sans-serif;
+			/* Популярный шрифт */
+		}
+
+		.pulsate {
+			font-size: 48px;
+			font-weight: bold;
+			color: #FFD700;
+			/* Яркий жёлтый цвет для текста */
+			animation: pulsate 1.5s infinite;
+		}
+
+		@keyframes pulsate {
+			0% {
+				transform: scale(1);
+				opacity: 1;
+			}
+
+			50% {
+				transform: scale(1.1);
+				opacity: 0.8;
+			}
+
+			100% {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="pulsate">setTimeout()</div>
+</body>
+
+</html>
