@@ -98,8 +98,8 @@
       setTimeout(actuallyAddUser, Math.random()*2000)
   }
 
-  // ад колбэков
-  // пирамида ужаса
+  // ад колбэков (callback hell)
+  // пирамида ужаса (the pyramid of doom)
   /*
   addUser2(() => { 
     deleteUser((msg) => {
