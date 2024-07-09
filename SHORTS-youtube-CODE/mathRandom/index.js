@@ -1,3 +1,7 @@
+
+
+
+
 function DeleteUser() {
 
 	const coinFlip = Math.random() > 0.5
@@ -9,11 +13,7 @@ function DeleteUser() {
 	}
 }
 
-
-
-
-
-
+// ----------------------------------------
 
 function doStuff() {
 

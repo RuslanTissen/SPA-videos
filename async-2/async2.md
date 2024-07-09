@@ -1,4 +1,4 @@
-### SPA - Async - 2
+### SPA - Async - 2 (advanced level!!!)
 
 ## Мини-определения
 
