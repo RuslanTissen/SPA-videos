@@ -15,9 +15,40 @@
 ## Упрощение асинхронного кода
 
 - Что такое область видимости в JavaScript? (What is a scope in JS)
+
 - Проблемы с promises:
   - Область видимости переменных делает код тяжеловесным с колбэками
   - Это может вызвать бесконечную цепочку promises
+
+```js
+
+getUsers()                   // returns a promise
+	.then(users => {
+		return createUserReport()     // returns a promise
+	})
+	.then(report => {
+		return convertReportToPdf(report)  // returns a promise
+	})
+	.catch(handeGetUsersError)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ```js
     import { getUsers, createUsersReport, convertReportToPdf } from './reportz.js'
