@@ -22,18 +22,41 @@
 
 ```js
 
-getUsers()                   // returns a promise
+getUsers() 					 // returns a promise
 	.then(users => {
-		return createUserReport()     // returns a promise
+		return createUsersReport(users)		 // returns a promise
 	})
 	.then(report => {
-		return convertReportToPdf(report)  // returns a promise
+		convertReportToPdf(report)		// returns a promise
+			.then(pdf => {
+				showReportModal(report, pdf)  // What is a problem?
+			})
 	})
 	.catch(handeGetUsersError)
 
+```
+
+- Есть лучший, более современный способ использовать promises:
+	- Называется async/await
+
+```js
+import {getusers, createUsersReport, convertReportToPdf} from "./report.js"
+
+	const users = await getusers()
+	const report = await createUsersReport(users)
+	const pdf = await convertReportToPdf(report)
+	showReportModal(report, pdf)
 
 ```
 
+- Примечание 1: вы можете использовать "await" только внутри функции "async"
+  - Использование await напрямую в вашем .js или консоли называется top-level await
+    - Top-level await работает:
+      - прямо в консоли браузера
+      - внутри модулей
+      - в Node REPL
+
+- Примечание 2: функции async **всегда** возвращают promise
 
 
 
@@ -50,7 +73,9 @@ getUsers()                   // returns a promise
 
 
 
-  ```js
+
+  
+ ```js
     import { getUsers, createUsersReport, convertReportToPdf } from './reportz.js'
 
     getUsers()
