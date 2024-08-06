@@ -1,5 +1,8 @@
 const url = "https://jsonplaceholder.typicode.com/posts"
 
+const input = sessionStorage.getItem("text-input")
+console.log(input)
+
 // Get posts from fake API
 const response = await fetch(url)
 const posts = await response.json()
