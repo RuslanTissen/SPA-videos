@@ -1,7 +1,20 @@
 const url = "https://jsonplaceholder.typicode.com/posts"
 
+
+
+const inputSess = document.querySelector("#content")
+const oldValue = localStorage.getItem("text-input")
+if (oldValue) {
+	inputSess.value = oldValue
+}
+
+inputSess.addEventListener("change", () => {
+	localStorage.setItem("text-input", inputSess.value)
+})
+
+
 const input = sessionStorage.getItem("text-input")
-console.log(input)
+// console.log(input)
 
 // Get posts from fake API
 const response = await fetch(url)
