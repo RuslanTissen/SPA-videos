@@ -24,7 +24,7 @@
       - `<Alert message="This is a test" type="warning" />`
       - `<Alert message="This is a test" type="info" />`
     - Accepting props with a "prop" property which is an object
-  - Children as are passed as a prop
+  - Children as are passed as a props
 
       ```htm
       <Alert type="error">
