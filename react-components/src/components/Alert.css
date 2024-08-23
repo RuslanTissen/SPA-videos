@@ -1,0 +1,23 @@
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around ;
+
+}
+
+div{
+    flex: 1 1 30%;
+    text-align: center;
+}
+
+.error{
+    background-color: blue;
+}
+
+.warning{
+    background-color: red;
+}
+
+.info{
+    background-color: yellow;
+}
