@@ -5,13 +5,13 @@ import "./style.css"
 export default function App() {
     return (
         <main>
-            <Expander text="Some list">
+            <Expander text="Some list" buttonText="You pushed ">
                 <MagicList />
                 <MagicList />
             </Expander>
-            <Expander text="Some text"/>
-            <Expander text="Some message"/>
-            <Expander text="Say Hallo"/>
+            <Expander buttonText="You pushed " text="Some text"/>
+            <Expander buttonText="You pushed " text="Some message"/>
+            <Expander buttonText="You pushed " text="Say Hallo"/>
         </main>
     )
 }
