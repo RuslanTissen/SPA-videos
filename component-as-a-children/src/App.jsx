@@ -1,5 +1,6 @@
 import Expander from "./Expander.jsx";
 import MagicList from "./MagicList.jsx";
+import "./style.css"
 
 export default function App() {
     return (
