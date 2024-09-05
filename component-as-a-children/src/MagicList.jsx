@@ -9,6 +9,7 @@ export default function MagicList(){
         newList.push("Hi")
 
         setList(newList)
+        console.log(newList);
     }
 
     return(
