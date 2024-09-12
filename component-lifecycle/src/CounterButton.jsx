@@ -10,13 +10,15 @@ export default function CounterButton() {
         console.log("CounterButton After first render");
     }, [])
   
+    useEffect(() => {
+        console.log("Effect of display", display);
+    }, [display])
+    
     console.log(counter) // выполняется при первом рендере и каждом последующем перерендере
-  
-
 
     return (
         <div>
-            <button onClick={() => setDisplay(!display)}>Toggle</button>
+            <button onClick={() => {setDisplay(!display); setCounter(0)}}>Toggle</button>
             {display && <button onClick={() => setCounter(counter + 1)}>{counter}</button>}
         </div>
         )
