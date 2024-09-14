@@ -39,6 +39,8 @@ A (functional) component lifecycle consists of three distinct parts
 Initial render -----> component is being added to the page
 Update/Re-render ---> component is re-rendered (state or props changed)
 Unmount ------------> component is no longer present on the page and is deleted
+
+```js
 function CounterButton() {
   const [counter, setCounter] = useState(0)
   const [display, setDisplay] = useState(true)
@@ -47,6 +49,8 @@ function CounterButton() {
 
   return <button onClick={() => setCounter(counter + 1)}>{counter}</button>
 }
+```
+
 Sometimes you want to run some code just the first time a component is rendered
 
 Sometimes you want to run some code just the last time a component is rendered (cleanup)
