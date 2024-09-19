@@ -4,15 +4,21 @@ import { useState, useEffect } from "react"
 
 export default function CounterButton() {
     const [counter, setCounter] = useState(0)
-    const [display, setDisplay] = useState(true)
+    const [display, setDisplay] = useState(false)
 
     useEffect(function() {
-        console.log("CounterButton After first render");
+        console.log("First effect: After first render");
     }, [])
   
     useEffect(() => {
         console.log("Effect of display", display);
     }, [display])
+
+    useEffect(function() {
+        console.log("Second effect: After first render");
+        
+        return () => {console.log("Cleanup");}
+    }, [])
     
     console.log(counter) // выполняется при первом рендере и каждом последующем перерендере
 
