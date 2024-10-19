@@ -8,6 +8,8 @@ export default function CounterButton() {
 
     useEffect(function() {
         console.log("First effect: After first render");
+
+        return () => {console.log("Effect: Cleanup 1");}
     }, [])
   
     useEffect(() => {
@@ -15,10 +17,16 @@ export default function CounterButton() {
     }, [display])
 
     useEffect(function() {
-        console.log("Second effect: After first render");
+        const id = setTimeout(() => {
+            console.log("KU-KU")
+            setDisplay(false)
+        }, 5000)
         
-        return () => {console.log("Cleanup");}
-    }, [])
+        return () => {
+            console.log("Effect: Cleanup 2");
+            clearTimeout(id)
+        }
+    }, [])   
     
     console.log(counter) // выполняется при первом рендере и каждом последующем перерендере
 
