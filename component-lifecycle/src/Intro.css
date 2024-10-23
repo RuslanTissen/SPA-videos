@@ -1,0 +1,40 @@
+.intro-container {
+    text-align: center;
+    margin-top: 50px;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Градиент для фона */
+    padding: 50px;
+    border-radius: 10px;
+  }
+  
+  .intro-title {
+    font-size: 36px;
+    color: #ffffff; /* Белый текст для контраста с фоном */
+    animation: fadeIn 1.5s ease-in;
+  }
+  
+  .intro-subtitle {
+    font-size: 20px;
+    color: #ffeb3b; /* Жёлтый цвет для более яркого эффекта */
+    animation: fadeIn 2.5s ease-in;
+  }
+  
+  .dot {
+    height: 15px;
+    width: 15px;
+    margin: 10px;
+    background-color: #4caf50; /* Яркий зелёный цвет для точек */
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
