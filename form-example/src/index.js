@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 // Version with object state variable
 function App() {
     const [data, setData] = useState({name: "", code: ""})
-
+    
     const handleNameChange = (e) => {
         setName(e.target.value)
     }
@@ -16,10 +16,10 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault()
         // Here add yuor logic
-        // alert("Data ready to save")
-        // const data = {
-        //     name: name,
-        //     code: code
+        alert("Data ready to save")
+        const data = {
+            name: name,
+            code: code
         }
         // Send the "data" to an API
     }
