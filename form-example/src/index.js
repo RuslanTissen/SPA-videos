@@ -2,35 +2,31 @@ import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 function App() {
-    const[name, setName] = useState("Steve Bez")
-    const[code, setCode] = useState("")
+    const[data, setData] = useState({name: "Steve Bez", code: ""})
 
-    const handleNameChange = (e) => {
-        setName(e.target.value)
-    }
-
-    const handleCodeChange = (e) => {
-        setCode(e.target.value)
+    const handleChange = (e) => {
+        console.log(e.target.name);
+        setData({
+            ...data,
+            [e.target.name]:e.target.value
+            })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         // Here add your logic
         alert("Data ready to save")
-        const data = {
-            name: name,
-            code: code
-        }
+        
         // Send the "data" to an API
     }
 
     return(
-        <form>
+        <form onSubmit={handleSubmit}>
             <div>
-                <input type='text' value={name} onChange={handleNameChange}></input>
+                <input type='text' value={data.name} name='name' onChange={handleChange}></input>
             </div>
             <div>
-                <input type='text' value={code} onChange={handleCodeChange}></input>
+                <input type='text' value={data.code} name='code' onChange={handleChange}></input>
             </div>
             <button>Add smth to database</button>
         </form>
@@ -55,14 +51,16 @@ root.render(<App />);
 //         setCode(e.target.value)
 //     }
 // 
-//     const handleSubmit = (e) => {
-//         e.preventDefault()
-//         // Here add your logic
-//         alert("Data ready to save")
-//         const data = {
-//             name: name,
-//             code: code
-//         }
+//   const handleSubmit = (e) => {
+        // e.preventDefault()
+        // // Here add your logic
+        // alert("Data ready to save")
+        // const data = {
+            // name: name,
+            // code: code
+        // }
+        // // Send the "data" to an API
+    // }
 //         // Send the "data" to an API
 //     }
 // 
