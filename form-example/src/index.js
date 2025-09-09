@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 function App() {
-    const[data, setData] = useState({name: "Steve Bez", code: ""})
+    const[data, setData] = useState({login: "",  psw: ""})
 
     const handleChange = (e) => {
         console.log(e.target.name);
         setData({
             ...data,
+            // Квадратные скобки нужны, чтобы использовать переменную как имя ключа объекта.
+            // вычисляемое свойство объекта (computed property)
             [e.target.name]:e.target.value
             })
     }
@@ -23,10 +25,10 @@ function App() {
     return(
         <form onSubmit={handleSubmit}>
             <div>
-                <input type='text' value={data.name} name='name' onChange={handleChange}></input>
+                <input type='text' value={data.login} name='login' onChange={handleChange}></input>
             </div>
             <div>
-                <input type='text' value={data.code} name='code' onChange={handleChange}></input>
+                <input type='text' value={data.psw} name='psw' onChange={handleChange}></input>
             </div>
             <button>Add smth to database</button>
         </form>
