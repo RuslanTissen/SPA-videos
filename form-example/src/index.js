@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
 function App() {
@@ -35,8 +35,54 @@ function App() {
     )
 }
 
+// useRef experiement
+function RefTest() {
+    const inputElement = useRef()
+    
+    const send = () => {
+        inputElement.current.focus()
+        // console.log(inputElement.current.value);
+        // send to API or create an object or do whatever you want
+        // console.log({name: inputElement.current.value});
+    }
+
+    return(
+        <form>
+            <input type='text' ref={inputElement}></input>
+            <input type='text'></input>
+            <button onClick={send}>Send</button>
+        </form>
+    )
+}
+
+
 const root = createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(<RefTest />);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Version with separate state varibles
 
