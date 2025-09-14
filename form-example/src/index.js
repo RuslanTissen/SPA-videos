@@ -47,11 +47,11 @@ function RefTest() {
     }
 
     return(
-        <form>
+        <div>
             <input type='text' ref={inputElement}></input>
             <input type='text'></input>
             <button onClick={send}>Send</button>
-        </form>
+        </div>
     )
 }
 
