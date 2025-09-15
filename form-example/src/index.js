@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
+// Version with a single state variable (OBJECT)  
 function App() {
     const[data, setData] = useState({login: "",  psw: ""})
 
