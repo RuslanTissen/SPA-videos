@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Version with a single state variable (OBJECT)  
@@ -38,19 +38,28 @@ function App() {
 
 // useRef experiement
 function RefTest() {
+    const [text, setText] = useState("")
+    const counter = useRef(0)    
     const inputElement = useRef()
     
     const send = () => {
         inputElement.current.focus()
-        // console.log(inputElement.current.value);
-        // send to API or create an object or do whatever you want
-        // console.log({name: inputElement.current.value});
     }
+    
+    useEffect(() => {
+        counter.current = counter.current + 1
+    }, [text])
+
+    console.log(text, counter.current);
 
     return(
         <div>
+            <input 
+                type='text'
+                value={text}
+                onChange={e => setText(e.target.value)}
+            ></input>
             <input type='text' ref={inputElement}></input>
-            <input type='text'></input>
             <button onClick={send}>Send</button>
         </div>
     )
