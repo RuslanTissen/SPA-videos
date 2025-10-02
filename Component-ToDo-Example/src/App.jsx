@@ -1,3 +1,11 @@
+import Header from "./Header.jsx";
+import TodoList from "./TodoList.jsx";
+
 export default function App() {
-  return <h1>Hello from App!</h1>;
+  return (
+    <div>
+      <Header />
+      <TodoList />
+    </div>
+  );
 }
