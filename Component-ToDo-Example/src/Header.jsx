@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Header() {
-  return <h1>My Todo list</h1>;
+  return <h1>My Todo List</h1>;
 }
