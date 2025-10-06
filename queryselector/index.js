@@ -3,7 +3,6 @@
 // const box = document.querySelector("div")
 // console.log({ box })
 
-
 // const wrapper = document.querySelector("div")
 // console.log(wrapper)
 
@@ -30,15 +29,13 @@
 // 	div.style.border = "5px solid black"
 // })
 
-document.body.style.margin = 0
+// document.body.style.margin = 0
 
 // Creating elements
-const newParagraph = document.createElement("p")
-newParagraph.innerText = "Sugar is a poison"
-newParagraph.style.color = "red"
-newParagraph.id = "new-para"
-document.querySelector("footer").appendChild(newParagraph)
+// const newParagraph = document.createElement("p");
+// newParagraph.innerText = "Sugar is a poison";
+// newParagraph.style.color = "red";
+// newParagraph.id = "new-para";
+// document.querySelector("footer").appendChild(newParagraph);
 
-console.log(newParagraph.id)
-
-
+// console.log(newParagraph.id);
