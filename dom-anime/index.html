@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DOM — IKEA метафора (анимация)</title>
+    <style>
+      :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --accent: #60a5fa;
+        --soft: #94a3b8;
+        --white: #eef2ff;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, #071021 0%, #0f1724 100%);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .stage {
+        width: 1000px;
+        max-width: 96vw;
+        height: 560px;
+        background: linear-gradient(180deg, #07102a 0%, #0c1220 100%);
+        border-radius: 12px;
+        box-shadow: 0 20px 50px rgba(2, 6, 23, 0.7);
+        overflow: hidden;
+        position: relative;
+        padding: 28px;
+        box-sizing: border-box;
+      }
+      header {
+        position: absolute;
+        left: 24px;
+        top: 20px;
+        font-weight: 600;
+        opacity: 0.9;
+      }
+      .controls {
+        position: absolute;
+        right: 24px;
+        top: 20px;
+        display: flex;
+        gap: 8px;
+      }
+      button.play {
+        background: var(--accent);
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: #012;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      button.reset {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: var(--white);
+        cursor: pointer;
+      }
+
+      /* Layout columns */
+      .left,
+      .right {
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .left {
+        width: 46%;
+        float: left;
+        padding: 40px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .right {
+        width: 54%;
+        float: right;
+        padding: 36px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* IKEA box */
+      .box-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .box {
+        width: 320px;
+        height: 220px;
+        background: linear-gradient(180deg, #dbeafe, #bfdbfe);
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 12px 30px rgba(2, 6, 23, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #0f1724;
+      }
+      .label {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        background: #fff;
+        color: #0b1220;
+        padding: 6px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+      }
+      .box svg {
+        width: 110px;
+        height: 110px;
+        opacity: 0.95;
+      }
+      .box.open {
+        transform: translateY(-10px) scale(0.99);
+        transition: transform 0.6s ease;
+      }
+
+      /* Browser mock */
+      .browser {
+        width: 520px;
+        height: 360px;
+        background: linear-gradient(180deg, #fff, #f8fafc);
+        border-radius: 12px;
+        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.5);
+        position: relative;
+        overflow: hidden;
+        border: 8px solid rgba(255, 255, 255, 0.03);
+      }
+      .browser .tabs {
+        height: 36px;
+        background: linear-gradient(90deg, #e6eefc, #f3f6ff);
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        gap: 8px;
+      }
+      .tab {
+        width: 120px;
+        height: 18px;
+        background: linear-gradient(90deg, #f8fafc, #e6eefc);
+        border-radius: 6px;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #0b1220;
+      }
+      .canvas {
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        height: 286px;
+        align-items: start;
+      }
+      .html-mock {
+        background: linear-gradient(180deg, #fff, #f7fafc);
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid rgba(2, 6, 23, 0.04);
+        height: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .render-mock {
+        background: #fff;
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px dashed rgba(6, 8, 23, 0.06);
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Elements inside render mock (the "assembled" furniture) */
+      .shelf {
+        width: 80%;
+        height: 12px;
+        background: #e2e8f0;
+        border-radius: 6px;
+        margin: 14px auto;
+        transform: translateY(-40px);
+        opacity: 0;
+      }
+      .door {
+        width: 86px;
+        height: 110px;
+        background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+        border-radius: 6px;
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        transform: translateY(30px) scale(0.9);
+        opacity: 0;
+      }
+      .handle {
+        width: 22px;
+        height: 8px;
+        background: #cbd5e1;
+        border-radius: 6px;
+        position: absolute;
+        right: 46px;
+        bottom: 62px;
+        opacity: 0;
+      }
+
+      /* toolbox icon */
+      .toolbox {
+        width: 86px;
+        height: 56px;
+        background: linear-gradient(180deg, #fef3c7, #fef08a);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #0b1220;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.25);
+      }
+
+      /* Genie */
+      .genie {
+        position: absolute;
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #7dd3fc, #60a5fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #021126;
+        font-weight: 800;
+        box-shadow: 0 12px 28px rgba(96, 165, 250, 0.18);
+        transform: translate(-50%, -50%) scale(0.4);
+        opacity: 0;
+      }
+      .genie .spark {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        top: 8px;
+        left: 8px;
+      }
+      .genie .hat {
+        position: absolute;
+        bottom: 10px;
+        width: 44px;
+        height: 20px;
+        border-radius: 6px;
+        background: #062241;
+      }
+
+      /* animation states */
+      .show-shelf {
+        transform: translateY(0);
+        opacity: 1;
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+      .show-door {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+      .show-handle {
+        opacity: 1;
+        transition: opacity 0.5s 0.2s;
+      }
+
+      /* Genie flying */
+      .genie.fly {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: transform 0.5s ease, opacity 0.35s ease;
+      }
+      .genie.move-to-shelf {
+        transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+      .genie.move-to-door {
+        transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+
+      /* small captions */
+      .caption {
+        font-size: 13px;
+        color: var(--soft);
+        opacity: 0.95;
+      }
+
+      footer {
+        position: absolute;
+        left: 24px;
+        bottom: 20px;
+        color: var(--soft);
+        font-size: 13px;
+      }
+
+      /* responsive */
+      @media (max-width: 920px) {
+        .stage {
+          height: 640px;
+          padding: 12px;
+        }
+        .left {
+          display: none;
+        }
+        .right {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage" id="stage">
+      <div class="left">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div class="label" style="background: #07102a; color: #dbeafe">
+            DOM · Метафора
+          </div>
+          <div class="caption">Сделано для видео · нажми «Play»</div>
+        </div>
+
+        <div class="box-wrap">
+          <div class="box" id="box">
+            <div class="label">INSTRUCTION</div>
+            <!-- simple svg of cabinet -->
+            <svg
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <rect
+                x="10"
+                y="18"
+                width="80"
+                height="64"
+                rx="6"
+                fill="#0f1724"
+                opacity=".08"
+              />
+              <rect
+                x="24"
+                y="30"
+                width="52"
+                height="44"
+                rx="4"
+                fill="#0f1724"
+                opacity=".15"
+              />
+              <rect
+                x="28"
+                y="40"
+                width="12"
+                height="28"
+                fill="#fff"
+                opacity=".06"
+              />
+              <rect
+                x="60"
+                y="40"
+                width="12"
+                height="28"
+                fill="#fff"
+                opacity=".06"
+              />
+              <circle cx="36" cy="54" r="2" fill="#0f1724" opacity=".4" />
+              <circle cx="72" cy="54" r="2" fill="#0f1724" opacity=".4" />
+            </svg>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div class="toolbox">TOOLBOX</div>
+            <div style="max-width: 220px">
+              <div style="font-weight: 700">Инструкция (DOM)</div>
+              <div class="caption">
+                Браузер читает вашу инструкцию (HTML + JS) и собирает страницу —
+                как шкаф из коробки.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: center;
+          "
+        >
+          <button class="play" id="playBtn">▶ Play</button>
+          <button class="reset" id="resetBtn">⟲ Reset</button>
+          <div class="caption" style="margin-left: 8px">
+            Рекорд: включи полноэкран и запиши.
+          </div>
+        </div>
+
+        <div
+          style="
+            margin-top: 18px;
+            color: var(--soft);
+            font-size: 13px;
+            line-height: 1.3;
+          "
+        >
+          <div><strong>Метафоры:</strong></div>
+          <div>• <code>&lt;div&gt;</code> = полка</div>
+          <div>• <code>&lt;button&gt;</code> = дверца</div>
+          <div>• React = джин в шкатулке, который сам исполняет изменения</div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="browser" id="browser">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 8px 12px;
+            "
+          >
+            <div style="display: flex; gap: 8px; align-items: center">
+              <div
+                style="
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background: #ef4444;
+                "
+              ></div>
+              <div
+                style="
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background: #f59e0b;
+                "
+              ></div>
+              <div
+                style="
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background: #10b981;
+                "
+              ></div>
+            </div>
+            <div style="font-size: 13px; color: #0b1220; font-weight: 700">
+              index.html
+            </div>
+            <div style="width: 28px"></div>
+          </div>
+
+          <div class="canvas">
+            <div class="html-mock" id="htmlMock">
+              <div style="font-weight: 800; margin-bottom: 8px">
+                HTML (инструкция)
+              </div>
+              <pre
+                style="
+                  font-size: 13px;
+                  line-height: 1.25;
+                  margin: 0;
+                  white-space: pre-wrap;
+                  color: #0b1220;
+                "
+              >
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div class="wardrobe"&gt;
+      &lt;div class="shelf"&gt;&lt;/div&gt;
+      &lt;button class="door"&gt;open&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </pre
+              >
+            </div>
+
+            <div class="render-mock" id="renderMock">
+              <div
+                style="
+                  font-weight: 700;
+                  color: #0b1220;
+                  position: absolute;
+                  left: 12px;
+                  top: 10px;
+                "
+              >
+                Rendered page
+              </div>
+
+              <div class="shelf" id="shelf"></div>
+              <div class="door" id="door"></div>
+              <div class="handle" id="handle"></div>
+
+              <!-- genie element (starts hidden) -->
+              <div class="genie" id="genie" aria-hidden>
+                <div class="spark"></div>
+                <div style="font-size: 22px; z-index: 2">🧞</div>
+                <div class="hat"></div>
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            Конец — «DOM — основа всего, что вы видите в браузере.»
+          </footer>
+        </div>
+      </div>
+
+      <div style="clear: both"></div>
+    </div>
+
+    <script>
+      // Простая последовательная анимация для эксплейнера.
+      (function () {
+        const playBtn = document.getElementById("playBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const box = document.getElementById("box");
+        const shelf = document.getElementById("shelf");
+        const door = document.getElementById("door");
+        const handle = document.getElementById("handle");
+        const genie = document.getElementById("genie");
+        const htmlMock = document.getElementById("htmlMock");
+        const renderMock = document.getElementById("renderMock");
+
+        let sequence = [];
+        let running = false;
+
+        function resetState() {
+          running = false;
+          box.classList.remove("open");
+          shelf.classList.remove("show-shelf");
+          door.classList.remove("show-door");
+          handle.classList.remove("show-handle");
+          genie.classList.remove("fly", "move-to-shelf", "move-to-door");
+          genie.style.transform = "translate(-50%,-50%) scale(.4)";
+          genie.style.left = "";
+          genie.style.top = "";
+          genie.style.opacity = 0;
+        }
+
+        function seqPush(fn, delay) {
+          sequence.push({ fn, delay });
+        }
+
+        function runSequence() {
+          if (running) return;
+          running = true;
+          let i = 0;
+          function next() {
+            if (i >= sequence.length) {
+              running = false;
+              return;
+            }
+            const step = sequence[i++];
+            step.fn();
+            setTimeout(next, step.delay);
+          }
+          next();
+        }
+
+        function play() {
+          resetState();
+          sequence = [];
+
+          // 0. Hook: show box, close -> open
+          seqPush(() => {
+            box.classList.add("open");
+          }, 900);
+
+          // 1. Browser reads instruction -> genie appears
+          seqPush(() => {
+            // show genie near toolbox (position roughly center-left)
+            const rect = renderMock.getBoundingClientRect();
+            genie.style.left =
+              rect.left + 80 - renderMock.getBoundingClientRect().left + "px";
+            genie.style.top =
+              rect.top + 160 - renderMock.getBoundingClientRect().top + "px";
+            genie.classList.add("fly");
+            // scale to visible
+            genie.style.transform = "translate(-50%,-50%) scale(1)";
+          }, 900);
+
+          // 2. Genie flies to shelf, creates shelf
+          seqPush(() => {
+            // animate genie to shelf area
+            const targetX = renderMock.clientWidth * 0.48;
+            const targetY = renderMock.clientHeight * 0.25;
+            genie.style.transform = `translate(${targetX}px, ${targetY}px) scale(1)`;
+            genie.classList.add("move-to-shelf");
+            // reveal shelf
+            setTimeout(() => shelf.classList.add("show-shelf"), 420);
+          }, 1100);
+
+          // 3. Genie flies to door, creates door+handle
+          seqPush(() => {
+            const targetX = renderMock.clientWidth * 0.78;
+            const targetY = renderMock.clientHeight * 0.7;
+            genie.style.transform = `translate(${targetX}px, ${targetY}px) scale(1)`;
+            genie.classList.add("move-to-door");
+            setTimeout(() => {
+              door.classList.add("show-door");
+              handle.classList.add("show-handle");
+            }, 520);
+          }, 1200);
+
+          // 4. Final caption pulse
+          seqPush(() => {
+            // small pulse on browser border to emphasize
+            const b = document.getElementById("browser");
+            b.animate(
+              [
+                { boxShadow: "0 18px 40px rgba(2,6,23,.5)" },
+                { boxShadow: "0 26px 60px rgba(96,165,250,.18)" },
+              ],
+              { duration: 700, fill: "forwards", direction: "alternate" }
+            );
+          }, 900);
+
+          runSequence();
+        }
+
+        playBtn.addEventListener("click", play);
+        resetBtn.addEventListener("click", resetState);
+
+        // initialize
+        resetState();
+
+        // helpful: allow auto-play for demo when opening the page
+        // (uncomment next line to auto-play)
+        // setTimeout(play, 600);
+      })();
+    </script>
+  </body>
+</html>
