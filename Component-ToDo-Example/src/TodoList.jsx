@@ -18,11 +18,9 @@ export default function TodoList() {
     <form onSubmit={handleSubmit}>
       <input type="text" value={text} onChange={handleChange} />
       <ul>
-        {todos.map((item) => (
-          <li>{item}</li>
+        {todos.map((item, index) => (
+          <li key={index}>{item}</li>
         ))}
-        {/* <li>Buy a tea</li>
-        <li>Go to a cinema</li> */}
       </ul>
     </form>
   );
