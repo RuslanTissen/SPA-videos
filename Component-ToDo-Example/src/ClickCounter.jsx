@@ -6,7 +6,8 @@ function ClickCounter() {
   return (
     <div>
       <p>Ты нажал {count} раз</p>
-      <button onClick={() => setCount(count + 1)}>Нажми меня</button>
+      <button onClick={() => setCount(count + 1)}>
+        Нажми меня</button>
     </div>
   );
 }
