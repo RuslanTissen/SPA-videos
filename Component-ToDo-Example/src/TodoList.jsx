@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function TodoList() {
-  const [todos, setTodos] = useState(["Вася", "Петя", "Маша"]);
+  const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
   const handleChange = (e) => {
@@ -14,12 +14,23 @@ export default function TodoList() {
     setTodos(newTodos);
   };
 
+  const handleClick = (item) => {
+    const newTodos = todos.filter((x) => x !== item);
+    setTodos(newTodos);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <input type="text" value={text} onChange={handleChange} />
       <ul>
         {todos.map((item) => (
-          <li>{item}</li>
+          <li
+            onClick={() => {
+              handleClick(item);
+            }}
+          >
+            {item}
+          </li>
         ))}
       </ul>
     </form>
