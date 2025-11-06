@@ -14,8 +14,10 @@ export default function TodoList() {
     setTodos(newTodos);
   };
 
-  const handleClick = (item) => {
-    const newTodos = todos.filter((x) => x !== item);
+  const handleClick = (index) => {
+    const newTodos = todos.filter((x, i) => {
+      return i !== index;
+    });
     setTodos(newTodos);
   };
 
@@ -23,10 +25,10 @@ export default function TodoList() {
     <form onSubmit={handleSubmit}>
       <input type="text" value={text} onChange={handleChange} />
       <ul>
-        {todos.map((item) => (
+        {todos.map((item, index) => (
           <li
             onClick={() => {
-              handleClick(item);
+              handleClick(index);
             }}
           >
             {item}
