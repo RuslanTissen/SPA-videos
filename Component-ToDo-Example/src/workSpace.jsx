@@ -1,6 +1,8 @@
-document.getElementById("id");
 
-document.querySelector("#id");
-document.querySelector("div");
 
-document.querySelectorAll("div");
+
+
+
+
+querySelector("body #wraper img");
+
