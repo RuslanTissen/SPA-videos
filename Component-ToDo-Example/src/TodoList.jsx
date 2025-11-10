@@ -1,8 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    const url = "https://jsonplaceholder.typicode.com/todos";
+    fetch(url)
+      .then((response) => response.json())
+      .then((result) => {
+        const convertedTodos = result.map((x) => x.title);
+        setTodos(convertedTodos);
+      });
+  }, []);
+
+  // What not to DO!!!
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -14,9 +26,9 @@ export default function TodoList() {
     setTodos(newTodos);
   };
 
-  const handleClick = (index) => {
-    const newTodos = todos.filter((x, i) => {
-      return i !== index;
+  const handleClick = (item) => {
+    const newTodos = todos.filter((x) => {
+      return x !== item;
     });
     setTodos(newTodos);
   };
@@ -25,10 +37,10 @@ export default function TodoList() {
     <form onSubmit={handleSubmit}>
       <input type="text" value={text} onChange={handleChange} />
       <ul>
-        {todos.map((item, index) => (
+        {todos.map((item) => (
           <li
             onClick={() => {
-              handleClick(index);
+              handleClick(item);
             }}
           >
             {item}
