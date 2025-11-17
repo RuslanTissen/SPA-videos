@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export default function TodoList() {
-  const [todos, setTodos] = useState([]);
+export default function TodoList(props) {
+  const { todos, setTodos } = props;
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -13,8 +13,6 @@ export default function TodoList() {
         setTodos(convertedTodos);
       });
   }, []);
-
-  // What not to DO!!!
 
   const handleChange = (e) => {
     setText(e.target.value);
