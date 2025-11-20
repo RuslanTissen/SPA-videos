@@ -61,16 +61,8 @@
 //   });
 // });
 
-const card = document.querySelectorAll(".card");
-console.log(card);
-for (const item of card) {
-  console.log(item);
-}
+const closeBtn = document.querySelector(".close-btn");
 
-Array.from(card).map((item) => {
-  console.log(item);
-});
-
-[...card].map((item) => {
-  console.log(item);
+closeBtn.addEventListener("click", function () {
+  event.target.parentElement.remove();
 });
